@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      PRIVATE_KEY_BASE64: ${{ secrets.PRIVATE_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,17 +26,13 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      - name: Get private key content
-        run: echo "::set-env name=PRIVATE_KEY_BASE64::${{ secrets.PRIVATE_KEY }}"
-
       - name: Terraform Init
         run: |
           cd terraform/
+          echo "$PRIVATE_KEY_BASE64" > private_key.pem.base64
           terraform init
 
       - name: Terraform Apply
         run: |
           cd terraform/
           terraform apply -auto-approve
-        env:
-          PRIVATE_KEY_BASE64: ${{ env.PRIVATE_KEY_BASE64 }}
