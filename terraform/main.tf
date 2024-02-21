@@ -8,12 +8,12 @@ resource "aws_instance" "example" {
   key_name      = "terraform-key-pairs"
   #security_groups = ["sg-0d6473f814374a9a6"]
   vpc_security_group_ids =  ["sg-0d6473f814374a9a6"]
-tags = {
+  tags = {
     Name = "react proj"
-}
-provisioner "remote-exec" {
-    inline = [
+  }
 
+  provisioner "remote-exec" {
+    inline = [
       "sudo yum update -y",
       "mkdir project",
       "cd project",
@@ -26,15 +26,18 @@ provisioner "remote-exec" {
       "npm install react-scripts --save-dev",
       "npm install react-dom",
       # Additional commands to start your application
-
     ]
     
     connection {
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("~/Documents/AWS/terraform-key-pairs.pem")
+      private_key = filebase64decode(var.private_key_base64)
       host        = self.public_ip
     }
+  }
 }
 
+variable "private_key_base64" {
+  description = "Base64 encoded private key content"
+  type        = string
 }

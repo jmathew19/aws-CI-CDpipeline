@@ -24,6 +24,9 @@ jobs:
       - name: Build React app
         run: npm run build
 
+      - name: Get private key content
+        run: echo "::set-env name=PRIVATE_KEY_BASE64::${{ secrets.PRIVATE_KEY }}"
+
       - name: Terraform Init
         run: |
           cd terraform/
@@ -33,3 +36,5 @@ jobs:
         run: |
           cd terraform/
           terraform apply -auto-approve
+        env:
+          PRIVATE_KEY_BASE64: ${{ env.PRIVATE_KEY_BASE64 }}
