@@ -29,10 +29,9 @@ jobs:
       - name: Terraform Init
         run: |
           cd terraform/
-          echo "$PRIVATE_KEY_BASE64" > private_key.pem.base64
-          terraform init
+          terraform init -var="private_key_base64=${{ env.PRIVATE_KEY_BASE64 }}"
 
       - name: Terraform Apply
         run: |
           cd terraform/
-          terraform apply -auto-approve
+          terraform apply -auto-approve -var="private_key_base64=${{ env.PRIVATE_KEY_BASE64 }}"
