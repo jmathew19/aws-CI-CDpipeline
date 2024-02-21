@@ -31,13 +31,8 @@ resource "aws_instance" "example" {
     connection {
       type        = "ssh"
       user        = "ec2-user"
-      private_key = filebase64decode(var.private_key_base64)  // Modify this line
+      private_key = filebase64decode("${var.private_key_base64}")
       host        = self.public_ip
     }
   }
-}
-
-variable "private_key_base64" {
-  description = "Base64 encoded private key content"
-  type        = string
 }
