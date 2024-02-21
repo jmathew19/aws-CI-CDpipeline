@@ -31,7 +31,7 @@ resource "aws_instance" "example" {
     connection {
       type        = "ssh"
       user        = "ec2-user"
-      private_key = filebase64decode(var.private_key_base64)
+      private_key = filebase64decode(var.private_key_base64)  // Modify this line
       host        = self.public_ip
     }
   }
