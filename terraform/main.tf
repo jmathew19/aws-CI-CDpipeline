@@ -1,25 +1,20 @@
 provider "aws" {
-  region = "us-east-1"  # Specify your desired AWS region
-
+  region     = "us-east-1"  # Specify your desired AWS region
   access_key = var.aws_access_key_id
-  secret_key = var.aws_secret_access_key #my key
+  secret_key = var.aws_secret_access_key
 }
 
 resource "aws_instance" "example" {
-  count = 1
-
   ami           = "ami-0e731c8a588258d0d" 
   instance_type = "t2.micro"
   key_name      = "terraform-key-pairs"
-  vpc_security_group_ids =  ["sg-0d6473f814374a9a6"]
+  vpc_security_group_ids = ["sg-0d6473f814374a9a6"]
   tags = {
     Name = "react proj"
   }
 
-  # Add a condition to check if the instance already exists
   lifecycle {
     ignore_changes = [
-      # Ignore changes to the tags, since these don't affect the instance creation
       tags,
     ]
   }
