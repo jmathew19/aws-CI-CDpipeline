@@ -5,14 +5,23 @@ provider "aws" {
   secret_key = var.aws_secret_access_key #my key
 }
 
-resource "aws_instance" "example" {
+rresource "aws_instance" "example" {
+  count = 1
+
   ami           = "ami-0e731c8a588258d0d" 
   instance_type = "t2.micro"
   key_name      = "terraform-key-pairs"
-  #security_groups = ["sg-0d6473f814374a9a6"]
   vpc_security_group_ids =  ["sg-0d6473f814374a9a6"]
   tags = {
     Name = "react proj"
+  }
+
+  # Add a condition to check if the instance already exists
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes to the tags, since these don't affect the instance creation
+      tags,
+    ]
   }
 
   provisioner "remote-exec" {
@@ -21,7 +30,7 @@ resource "aws_instance" "example" {
       "mkdir project",
       "cd project",
       "sudo yum install git -y",
-      "git clone https://github.com/jmathew19/react-aws-terraform-project.git",
+      "git clone https://github.com/jmathew19/test.git",
       "cd react-aws-terraform-project",
       "sudo yum install -y nodejs npm",
       "node --version",
