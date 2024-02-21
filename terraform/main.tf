@@ -5,7 +5,7 @@ provider "aws" {
   secret_key = var.aws_secret_access_key #my key
 }
 
-rresource "aws_instance" "example" {
+resource "aws_instance" "example" {
   count = 1
 
   ami           = "ami-0e731c8a588258d0d" 
