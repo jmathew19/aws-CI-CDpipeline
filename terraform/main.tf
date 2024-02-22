@@ -1,11 +1,10 @@
 provider "aws" {
-  region     = "us-east-1"
+  region     = "us-east-1"  # Specify your desired AWS region
   access_key = var.aws_access_key_id
   secret_key = var.aws_secret_access_key
 }
 
 resource "aws_instance" "example" {
-  count         = var.create_instance ? 1 : 0  # Control whether to create the instance
   ami           = "ami-0e731c8a588258d0d" 
   instance_type = "t2.micro"
   key_name      = "terraform-key-pairs"
@@ -14,13 +13,17 @@ resource "aws_instance" "example" {
     Name = "react proj"
   }
 
+  lifecycle {
+    prevent_destroy = true
+  }
+  
   provisioner "remote-exec" {
     inline = [
       "sudo yum update -y",
       "mkdir project",
       "cd project",
       "sudo yum install git -y",
-      "git clone https://github.com/jmathew19/test.git",
+      "git clone https://github.com/jmathew19/frontend.git",
       "cd react-aws-terraform-project",
       "sudo yum install -y nodejs npm",
       "node --version",
@@ -53,10 +56,4 @@ variable "aws_access_key_id" {
 variable "aws_secret_access_key" {
   description = "AWS secret access key"
   type        = string
-}
-
-variable "create_instance" {
-  description = "Whether to create the EC2 instance"
-  type        = bool
-  default     = true  # Default to creating the instance
 }

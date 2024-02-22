@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # or whatever branch you want to trigger on
+    paths:
+      - .github/workflows/deploy.yml    # Specify the path to your file here
 
 jobs:
   deploy:
