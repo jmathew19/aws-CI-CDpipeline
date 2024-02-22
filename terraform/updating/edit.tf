@@ -33,7 +33,7 @@ resource "null_resource" "modify_files" {
       type        = "ssh"
       user        = "ec2-user"  # User to SSH into the instance
       private_key = base64decode(var.private_key_base64)
-      host        = self.public_ip
+      host        = "34.201.100.156"
     }
   }
 }
