@@ -12,10 +12,6 @@ resource "aws_instance" "example" {
   tags = {
     Name = "react proj"
   }
-
-  lifecycle {
-    prevent_destroy = true
-  }
   
   provisioner "remote-exec" {
     inline = [
