@@ -5,9 +5,9 @@ provider "aws" {
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-0e731c8a588258d0d" 
-  instance_type = "t2.micro"
-  key_name      = "terraform-key-pairs"
+  ami                    = "ami-0e731c8a588258d0d" 
+  instance_type          = "t2.micro"
+  key_name               = "terraform-key-pairs"
   vpc_security_group_ids = ["sg-0d6473f814374a9a6"]
   tags = {
     Name = "react proj"
