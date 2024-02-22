@@ -1,0 +1,31 @@
+name: Edit EC2 Instance
+
+on:
+  push:
+    branches:
+      - main  
+    paths:
+      - 'src'  
+
+jobs:
+  edit-instance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Terraform Init
+        run: |
+          cd terraform/updating
+          terraform init -var="private_key_base64=${{ env.PRIVATE_KEY_BASE64 }}" -var="aws_access_key_id=${{ env.AWS_ACCESS_KEY_ID }}" -var="aws_secret_access_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
+
+      - name: Terraform Apply
+        run: |
+          cd terraform/updating
+          terraform apply -auto-approve -var="private_key_base64=${{ env.PRIVATE_KEY_BASE64 }}" -var="aws_access_key_id=${{ env.AWS_ACCESS_KEY_ID }}" -var="aws_secret_access_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
+  
