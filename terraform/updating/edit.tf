@@ -30,7 +30,7 @@ resource "null_resource" "ssh_into_instance" {
       type        = "ssh"
       user        = "ec2-user"  # User to SSH into the instance
       private_key = base64decode(var.private_key_base64)  # Path to your private key file
-      host        = aws_instance.example.public_ip  # Public IP of the instance
+      host        = "34.201.100.156"  # Public IP of the instance
     }
   }
 }
