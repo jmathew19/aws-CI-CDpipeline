@@ -26,6 +26,7 @@ resource "aws_instance" "example" {
       "sudo yum install -y nodejs npm",
       "node --version",
       "npm --version",
+      "npm install web-vitals",
       "npm install react-scripts --save-dev",
       "npm install react-dom",
       # Additional commands to start your application
