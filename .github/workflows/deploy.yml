@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm install 
 
-      # Install dependencies, build your app if necessary
+      # Install dependencies, build your app if necessary here
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
