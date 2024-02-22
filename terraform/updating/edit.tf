@@ -3,7 +3,6 @@ provider "aws" {
   access_key = var.aws_access_key_id
   secret_key = var.aws_secret_access_key
 }
-
 # Define the EC2 instance resource
 resource "aws_instance" "example" {
   ami                    = "ami-0e731c8a588258d0d"  # Specify your desired AMI
@@ -15,8 +14,8 @@ resource "aws_instance" "example" {
   }
 }
 
-# Null resource to trigger the provisioner for modifying files inside the EC2 instance
-resource "null_resource" "modify_files" {
+# Provisioner to SSH into the instance and write a file
+resource "null_resource" "ssh_into_instance" {
   triggers = {
     instance_id = aws_instance.example.id  # Trigger whenever the instance ID changes
   }
@@ -24,19 +23,19 @@ resource "null_resource" "modify_files" {
   # Provisioner to execute commands on the instance after it's created or updated
   provisioner "remote-exec" {
     inline = [
-      "echo 'Hello, world!' > /tmp/test.txt",  # Example command to create a file
-      "echo 'This is a test' >> /tmp/test.txt" # Example command to append to a file
-      # You can add more commands here to modify files as needed
+      "echo 'Hello, world!' > /home/ec2-user/hello_world.txt"
     ]
 
     connection {
       type        = "ssh"
       user        = "ec2-user"  # User to SSH into the instance
-      private_key = base64decode(var.private_key_base64)
-      host        = "34.201.100.156"
+      private_key = base64decode(var.private_key_base64)  # Path to your private key file
+      host        = aws_instance.example.public_ip  # Public IP of the instance
     }
   }
 }
+
+
 variable "private_key_base64" {
   description = "Base64 encoded private key content"
   type        = string
