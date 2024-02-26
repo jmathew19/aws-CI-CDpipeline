@@ -45,7 +45,7 @@ function Login() {
 
   return (
     <div>
-      <h2>Login here tear :</h2>
+      <h2>Login here:</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">Username:</label>
@@ -57,7 +57,7 @@ function Login() {
           />
         </div>
         <div>
-          <label htmlFor="password">Password   : </label>
+          <label htmlFor="password">Password: </label>
           <input
             type="password"
             id="password"
