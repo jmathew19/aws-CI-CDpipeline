@@ -23,7 +23,7 @@ jobs:
             echo ${{env.PRIVATE_KEY_BASE64}} | base64 --decode > terraform-key-pairs.pem
             chmod 600 terraform-key-pairs.pem
 
-      - name: SSH into EC2 Instance and Make Folder
+      - name: SSH into EC2 Instance and update folder
         uses: appleboy/ssh-action@master
         with:
             host: 54.89.21.117
