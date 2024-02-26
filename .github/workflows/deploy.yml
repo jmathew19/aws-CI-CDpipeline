@@ -5,7 +5,7 @@ on:
     branches:
       - main  # or whatever branch you want to trigger on
     paths:
-      - .github/workflows/deploy.yml    # Specify the path to your file here
+      - .github/workflows/deploy.yml
       - terraform/creation/main.tf
 jobs:
   deploy:
