@@ -16,7 +16,6 @@ jobs:
       PRIVATE_KEY_BASE64: ${{ secrets.PRIVATE_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      DEBUG: true
     steps:
       - name: Decode private key
         run: |
@@ -31,7 +30,8 @@ jobs:
             key: ./terraform-key-pairs.pem
             script: |
               mkdir testing123
-  
+        env:
+          DEBUG: true
     # steps:
     #   - name: Checkout code
     #     uses: actions/checkout@v2
