@@ -23,6 +23,9 @@ jobs:
             echo "${{env.PRIVATE_KEY2}}" > terraform-key-pairs.pem
             chmod 600 terraform-key-pairs.pem 
 
+      - name: Print contents of decoded file
+        run: cat terraform-key-pairs.pem
+
       - name: SSH into EC2 Instance and Make Folder
         uses: appleboy/ssh-action@v0.1.10
         with:
