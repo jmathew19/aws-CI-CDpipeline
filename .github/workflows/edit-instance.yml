@@ -31,7 +31,7 @@ jobs:
         with:
             host: 34.201.51.149
             username: ec2-user
-            key: ${{env.PRIVATE_KEY_BASE64}}
+            key: ${{env.PRIVATE_KEY2}}
             script: |
               mkdir testing123
         env:
