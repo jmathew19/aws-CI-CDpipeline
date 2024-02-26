@@ -18,7 +18,7 @@ resource "null_resource" "add_file_to_instance" {
   # Provisioner to execute commands on the existing instance
   provisioner "remote-exec" {
     inline = [
-      "echo 'This is a new file' > /home/ec2-user/new_file.txt"
+      "mkdir testing123"
     ]
 
     connection {
