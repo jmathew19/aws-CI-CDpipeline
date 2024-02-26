@@ -7,7 +7,6 @@ on:
     paths:
       - 'src/*'  
       - '.github/workflows/edit-instance.yml'
-      - 'terraform/updating/edit.tf'
 
 jobs:
   edit-instance:
