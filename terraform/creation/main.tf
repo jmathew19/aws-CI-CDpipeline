@@ -11,6 +11,7 @@ resource "aws_instance" "example" {
   vpc_security_group_ids = ["sg-0d6473f814374a9a6"]
   tags = {
     Name = "react proj"
+    
   }
   
   provisioner "remote-exec" {
@@ -28,7 +29,7 @@ resource "aws_instance" "example" {
       "npm install react-scripts --save-dev",
       "npm install react-dom",
       # Additional commands to start your application
-      
+
     ]
     
     connection {
