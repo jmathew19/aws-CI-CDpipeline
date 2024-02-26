@@ -21,9 +21,7 @@ jobs:
         run: |
             echo "${{env.PRIVATE_KEY_BASE64}}" | base64 --decode > terraform-key-pairs.pem
             chmod 600 terraform-key-pairs.pem
-      - name: Print contents of decoded file
-        run: cat terraform-key-pairs.pem
-        
+
       - name: SSH into EC2 Instance and Make Folder
         uses: appleboy/ssh-action@master
         with:
