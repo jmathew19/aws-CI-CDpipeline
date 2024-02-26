@@ -27,8 +27,10 @@ resource "aws_instance" "example" {
       "npm install web-vitals",
       "npm install react-scripts --save-dev",
       "npm install react-dom",
-      "npm install react-router-dom"
-
+      "npm install react-router-dom",
+      "cd ~/project/test",
+      "npm start"
+      
       # Additional commands to start your application
 
     ]
