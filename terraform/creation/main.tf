@@ -28,6 +28,7 @@ resource "aws_instance" "example" {
       "npm install react-scripts --save-dev",
       "npm install react-dom",
       # Additional commands to start your application
+      
     ]
     
     connection {
