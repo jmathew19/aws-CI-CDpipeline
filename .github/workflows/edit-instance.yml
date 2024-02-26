@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Decode private key
         run: |
-            echo "${{env.PRIVATE_KEY_BASE64}}" | base64 --decode > terraform-key-pairs.pem
+            echo ${{env.PRIVATE_KEY_BASE64}} | base64 --decode > terraform-key-pairs.pem
             chmod 600 terraform-key-pairs.pem
 
       # - name: Print contents of decoded file
