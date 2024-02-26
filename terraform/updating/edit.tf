@@ -1,36 +1,31 @@
 provider "aws" {
-  region     = "us-east-1"  # Specify your desired AWS region
+  region = "us-east-1"  # Specify your desired AWS region
   access_key = var.aws_access_key_id
-  secret_key = var.aws_secret_access_key
-}
-# Define the EC2 instance resource
-resource "aws_instance" "example" {
-  ami                    = "ami-0e731c8a588258d0d"  # Specify your desired AMI
-  instance_type          = "t2.micro"               # Initial instance type
-  key_name               = "terraform-key-pairs"
-  vpc_security_group_ids = ["sg-0d6473f814374a9a6"]  # Initial security group(s)
-  tags = {
-    Name = "react proj"
-  }
+  secret_key = var.aws_secret_access_key# Add your AWS access and secret keys here or use other methods for authentication
 }
 
-# Provisioner to SSH into the instance and write a file
-resource "null_resource" "ssh_into_instance" {
+# Data source to fetch information about the existing EC2 instance
+data "aws_instance" "existing_instance" {
+  instance_id = "i-07cecf6d8d622b781"  # Replace with the ID of your existing EC2 instance
+}
+
+# Null resource with provisioner to SSH into the existing instance and add a file
+resource "null_resource" "add_file_to_instance" {
   triggers = {
-    instance_id = aws_instance.example.id  # Trigger whenever the instance ID changes
+    instance_id = data.aws_instance.existing_instance.id
   }
 
-  # Provisioner to execute commands on the instance after it's created or updated
+  # Provisioner to execute commands on the existing instance
   provisioner "remote-exec" {
     inline = [
-      "echo 'Hello, world!' > /home/ec2-user/hello_world.txt"
+      "echo 'This is a new file' > /home/ec2-user/new_file.txt"
     ]
 
     connection {
       type        = "ssh"
       user        = "ec2-user"  # User to SSH into the instance
       private_key = base64decode(var.private_key_base64)  # Path to your private key file
-      host        = "44.202.44.189"  # Public IP of the instance
+      host        = data.aws_instance.existing_instance.public_ip  # Public IP of the instance
     }
   }
 }
