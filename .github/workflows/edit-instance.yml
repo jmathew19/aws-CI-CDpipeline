@@ -30,7 +30,7 @@ jobs:
             username: ec2-user
             key: ${{env.PRIVATE_KEY2}}
             script: |
-              cd project/text
+              cd project/test
               git pull origin
         env:
           DEBUG: true
