@@ -6,7 +6,7 @@ on:
       - main  # or whatever branch you want to trigger on
     paths:
       - .github/workflows/deploy.yml
-      - terraform/creation/main.tf
+      - terraform/creation/main.tf 
 jobs:
   deploy:
     runs-on: ubuntu-latest
