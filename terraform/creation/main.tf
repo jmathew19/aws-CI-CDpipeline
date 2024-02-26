@@ -11,7 +11,6 @@ resource "aws_instance" "example" {
   vpc_security_group_ids = ["sg-0d6473f814374a9a6"]
   tags = {
     Name = "react proj"
-    
   }
   
   provisioner "remote-exec" {
