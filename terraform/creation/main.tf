@@ -31,6 +31,7 @@ resource "aws_instance" "example" {
       "cd ~/project/test",
       "npm start"
       
+      
       # Additional commands to start your application
 
     ]
