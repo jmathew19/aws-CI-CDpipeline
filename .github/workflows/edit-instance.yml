@@ -23,7 +23,7 @@ jobs:
             chmod 600 terraform-key-pairs.pem 
 
       - name: SSH into EC2 Instance and Make Folder
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.10
         with:
             host: 34.201.51.149
             username: ec2-user
