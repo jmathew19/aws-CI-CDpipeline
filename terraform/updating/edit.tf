@@ -17,7 +17,7 @@ resource "aws_instance" "example" {
 # Provisioner to SSH into the instance and write a file
 resource "null_resource" "ssh_into_instance" {
   triggers = {
-    instance_id = "i-0681017f9d6024325"  # Trigger whenever the instance ID changes
+    instance_id = aws_instance.example.id  # Trigger whenever the instance ID changes
   }
 
   # Provisioner to execute commands on the instance after it's created or updated
