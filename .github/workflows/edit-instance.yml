@@ -27,7 +27,7 @@ jobs:
         with:
             host: 34.201.51.149
             username: ec2-user
-            key: ./terraform-key-pairs.pem
+            key: ghjkl
             script: |
               mkdir testing123
         env:
