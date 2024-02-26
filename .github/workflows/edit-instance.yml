@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Decode private key
         run: |
-            echo "${{env.PRIVATE_KEY2}}" | base64 --decode > terraform-key-pairs.pem
+            echo "${{env.PRIVATE_KEY2}}" > terraform-key-pairs.pem
             chmod 600 terraform-key-pairs.pem 
 
       - name: SSH into EC2 Instance and Make Folder
