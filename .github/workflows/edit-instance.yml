@@ -16,6 +16,22 @@ jobs:
       PRIVATE_KEY_BASE64: ${{ secrets.PRIVATE_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+    steps:
+      - name: Decode private key
+        run: |
+            echo "${PRIVATE_KEY_BASE64}" | base64 --decode > terraform-key-pairs.pem
+            chmod 600 terraform-key-pairs.pem
+  
+      - name: SSH into EC2 Instance and Make Folder
+        uses: appleboy/ssh-action@master
+        with:
+            host: 34.201.51.149
+            username: ec2-user
+            key: ./terraform-key-pairs.pem
+            script: |
+              mkdir testing123
+  
     # steps:
     #   - name: Checkout code
     #     uses: actions/checkout@v2
@@ -34,17 +50,4 @@ jobs:
     #     run: |
     #       cd terraform/updating
     #       terraform apply -auto-approve -var="private_key_base64=${{ env.PRIVATE_KEY_BASE64 }}" -var="aws_access_key_id=${{ env.AWS_ACCESS_KEY_ID }}" -var="aws_secret_access_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
-    steps:
-      - name: Decode private key
-        run: |
-          echo "${PRIVATE_KEY_BASE64}" | base64 --decode > terraform-key-pairs.pem
-          chmod 600 terraform-key-pairs.pem
-
-      - name: SSH into EC2 Instance and Make Folder
-        uses: appleboy/ssh-action@master
-        with:
-          host: 34.201.51.149
-          username: ec2-user
-          key: ./terraform-key-pairs.pem
-          script: |
-            mkdir testing123
+    
