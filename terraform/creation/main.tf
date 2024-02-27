@@ -30,8 +30,6 @@ resource "aws_instance" "example" {
       "npm install react-router-dom",
       "cd ~/project/test",
       "npm start"
-      
-      
       # Additional commands to start your application
 
     ]
