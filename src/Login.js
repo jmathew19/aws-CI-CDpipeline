@@ -1,78 +1,78 @@
 import React, { useState } from 'react';
 
-// Frontend code to call the backend API
-async function checkUsernameValidity(username) {
-    const response = await fetch('https://your-api-gateway-url/dev/check-username', {
+async function loginUser(username, password) {
+    const response = await fetch('http://localhost:3001/login', {
         method: 'POST',
-        body: JSON.stringify({ username }),
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({ username, password })
     });
-    
-    const data = await response.json();
-    
-    return data.isValid;
+
+    if (response.ok) {
+        return true;
+    } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to login');
+    }
 }
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value);
+    };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    
-    // Call the function to check username validity
-    const isValidUsername = await checkUsernameValidity(username);
-    
-    // Use the result to perform further actions
-    if (!isValidUsername) {
-      alert("Invalid username!");
-      return;
-    }
-    
-    // Continue with the login process
-    // You can add your authentication logic here
-  };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-  return (
-    <div>
-      <h2>Login Here:</h2>
-      <form onSubmit={handleSubmit}>
+        try {
+            const isLoggedIn = await loginUser(username, password);
+
+            if (isLoggedIn) {
+                // Redirect to a new page upon successful login
+                window.location.href = '/dashboard';
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
+    return (
         <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={handleUsernameChange}
-          />
+            <h2>Login Here:</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="username">Username:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={handleUsernameChange}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="password">Password: </label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={handlePasswordChange}
+                    />
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div>
+                <p>Already have an account? <a href='/signup'>Sign up here</a></p>
+            </div>
         </div>
-        <div>
-          <label htmlFor="password">Password: </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <div>
-          <p>Already have an account? <a href='/signup'>Sign up here</a></p>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Login;
-//makng sure the push works heheheheh
